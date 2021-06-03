@@ -1,21 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
+import {
+  useFonts,
+  // eslint-disable-next-line camelcase
+  Spartan_700Bold,
+} from '@expo-google-fonts/spartan';
+import AppLoading from 'expo-app-loading';
+import Main from './src/screens/Main';
+import AppThemeProvider from './src/styles/AppThemeProvider';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+const App = () => {
+  const [fontsLoaded] = useFonts({ Spartan_700Bold });
+  return !fontsLoaded ? <AppLoading /> : (
+    <AppThemeProvider>
+      <View style={{ paddingTop: StatusBar.currentHeight ?? 0 }}>
+        <Main />
+      </View>
+    </AppThemeProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
